@@ -9,6 +9,9 @@ export default withMT({
 	],
 	theme: {
 		extend: {
+			screens: {
+				ultraXl: '1729px',
+			},
 			colors: {
 				'color-text-title': '#000B19',
 				'color-text-chip-card': '#6F7C8F',
@@ -25,6 +28,8 @@ export default withMT({
 				'color-error-low': '#FCE6E6',
 				'color-valid': '#18DB68',
 				'color-valid-low': '#F0FFF6',
+				'color-activeRegion': '#80B8FB',
+				'color-notActiveRegion': '#D3E7FF',
 			},
 			fontFamily: {
 				cygro: 'var(--font-cygro)',

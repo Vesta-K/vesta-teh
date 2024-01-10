@@ -1,8 +1,8 @@
-'use client'
-import React from 'react'
-import SideBarButton from '@/ui/sideBarButton'
-import StoreProvider from '@/StoreProvider'
-import Logotype from '@/ui/Logotype'
+'use client';
+import React from 'react';
+import SideBarButton from '@/ui/sideBarButton';
+import StoreProvider from '@/StoreProvider';
+import Logotype from '@/ui/Logotype';
 
 export const button = [
 	{
@@ -50,7 +50,7 @@ export const button = [
 		text: 'Услуги',
 	},
 	{
-		id: 'advanced',
+		id: 'advantages',
 		icon: (
 			<svg
 				className={'group-active:text-color-blue-accent'}
@@ -72,7 +72,7 @@ export const button = [
 		text: 'Преимущества',
 	},
 	{
-		id: 'region',
+		id: 'regions',
 		icon: (
 			<svg
 				className={'group-active:text-color-blue-accent'}
@@ -94,7 +94,7 @@ export const button = [
 		text: 'Рабочие регионы',
 	},
 	{
-		id: 'designing',
+		id: 'about',
 		icon: (
 			<svg
 				className={'group-active:text-color-blue-accent'}
@@ -105,7 +105,7 @@ export const button = [
 				xmlns="http://www.w3.org/2000/svg"
 			>
 				<path
-					d="M9 12H12.75M9 15H12.75M9 18H12.75M15.75 18.75H18C18.5967 18.75 19.169 18.5129 19.591 18.091C20.0129 17.669 20.25 17.0967 20.25 16.5V6.108C20.25 4.973 19.405 4.01 18.274 3.916C17.9 3.88498 17.5256 3.85831 17.151 3.836M17.151 3.836C17.2174 4.05109 17.2501 4.27491 17.25 4.5C17.25 4.69891 17.171 4.88968 17.0303 5.03033C16.8897 5.17098 16.6989 5.25 16.5 5.25H12C11.586 5.25 11.25 4.914 11.25 4.5C11.25 4.269 11.285 4.046 11.35 3.836M17.151 3.836C16.868 2.918 16.012 2.25 15 2.25H13.5C13.0192 2.25011 12.5511 2.40414 12.1643 2.68954C11.7774 2.97493 11.492 3.3767 11.35 3.836M11.35 3.836C10.974 3.859 10.6 3.886 10.226 3.916C9.095 4.01 8.25 4.973 8.25 6.108V8.25M8.25 8.25H4.875C4.254 8.25 3.75 8.754 3.75 9.375V20.625C3.75 21.246 4.254 21.75 4.875 21.75H14.625C15.246 21.75 15.75 21.246 15.75 20.625V9.375C15.75 8.754 15.246 8.25 14.625 8.25H8.25ZM6.75 12H6.758V12.008H6.75V12ZM6.75 15H6.758V15.008H6.75V15ZM6.75 18H6.758V18.008H6.75V18Z"
+					d="M15 19.128C15.853 19.3757 16.7368 19.5009 17.625 19.5C19.0534 19.5021 20.4633 19.1764 21.746 18.548C21.7839 17.6517 21.5286 16.7675 21.0188 16.0293C20.509 15.2912 19.7724 14.7394 18.9207 14.4575C18.0691 14.1757 17.1487 14.1791 16.2992 14.4674C15.4497 14.7557 14.7173 15.313 14.213 16.055M15 19.128V19.125C15 18.012 14.714 16.965 14.213 16.055M15 19.128V19.234C13.0755 20.3931 10.8706 21.0038 8.62402 21C6.29302 21 4.11202 20.355 2.25002 19.234L2.24902 19.125C2.24826 17.7095 2.71864 16.3339 3.58601 15.2153C4.45338 14.0966 5.6684 13.2984 7.03951 12.9466C8.41063 12.5948 9.85985 12.7093 11.1587 13.2721C12.4575 13.8349 13.5321 14.814 14.213 16.055M12 6.375C12 7.27011 11.6444 8.12855 11.0115 8.76149C10.3786 9.39442 9.52013 9.75 8.62502 9.75C7.72992 9.75 6.87147 9.39442 6.23854 8.76149C5.6056 8.12855 5.25002 7.27011 5.25002 6.375C5.25002 5.47989 5.6056 4.62145 6.23854 3.98851C6.87147 3.35558 7.72992 3 8.62502 3C9.52013 3 10.3786 3.35558 11.0115 3.98851C11.6444 4.62145 12 5.47989 12 6.375ZM20.25 8.625C20.25 9.32119 19.9735 9.98887 19.4812 10.4812C18.9889 10.9734 18.3212 11.25 17.625 11.25C16.9288 11.25 16.2612 10.9734 15.7689 10.4812C15.2766 9.98887 15 9.32119 15 8.625C15 7.92881 15.2766 7.26113 15.7689 6.76884C16.2612 6.27656 16.9288 6 17.625 6C18.3212 6 18.9889 6.27656 19.4812 6.76884C19.9735 7.26113 20.25 7.92881 20.25 8.625Z"
 					stroke="currentColor"
 					strokeWidth="1.5"
 					strokeLinecap="round"
@@ -113,7 +113,7 @@ export const button = [
 				/>
 			</svg>
 		),
-		text: 'Проектирование',
+		text: 'О компании',
 	},
 	{
 		id: 'contacts',
@@ -144,15 +144,13 @@ export const button = [
 		),
 		text: 'Контакты',
 	},
-]
+];
 function SideBar({
 	className,
 	classNameLink,
-	leftposition,
 }: {
-	className?: string
-	classNameLink?: string
-	leftposition?: boolean
+	className?: string;
+	classNameLink?: string;
 }) {
 	return (
 		<StoreProvider>
@@ -162,7 +160,6 @@ function SideBar({
 					{button &&
 						button.map(({ id, icon, text }) => (
 							<SideBarButton
-								leftposition={leftposition}
 								className={classNameLink}
 								key={id}
 								text={text}
@@ -173,7 +170,7 @@ function SideBar({
 				</ul>
 			</div>
 		</StoreProvider>
-	)
+	);
 }
 
-export default SideBar
+export default SideBar;

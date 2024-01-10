@@ -1,8 +1,12 @@
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
 
 function Logotype({ logoHeader }: { logoHeader?: boolean }) {
 	return (
-		<div className={'flex flex-row items-center gap-2 xl:flex-col xl:gap-4'}>
+		<Link
+			href={'/'}
+			className={'flex flex-row items-center gap-2 xl:flex-col xl:gap-4'}
+		>
 			<svg
 				className={'sm:p h-9 w-9 sm:h-14 sm:w-14 xl:h-20 xl:w-20'}
 				viewBox="0 0 36 36"
@@ -43,13 +47,13 @@ function Logotype({ logoHeader }: { logoHeader?: boolean }) {
 				</h3>
 			) : (
 				<h3
-					className={`font-mursa hidden text-3xl font-extrabold leading-normal text-color-blue-accent xl:block`}
+					className={`hidden font-mursa text-3xl font-extrabold leading-normal text-color-blue-accent xl:block`}
 				>
 					Веста-Тех.РФ
 				</h3>
 			)}
-		</div>
-	)
+		</Link>
+	);
 }
 
-export default Logotype
+export default Logotype;

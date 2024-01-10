@@ -8,10 +8,11 @@ import SideBarButton from '@/ui/sideBarButton'
 
 function Header() {
 	let { isOpen } = useAppSelector((state) => state.sideBarReducer)
+
 	return (
 		<header
 			className={
-				'fixed z-50 flex max-h-screen w-screen justify-center p-2 sm:hidden'
+				'fixed z-50 flex max-h-screen w-screen justify-center  overflow-y-scroll p-2 sm:hidden'
 			}
 		>
 			<div
@@ -23,7 +24,7 @@ function Header() {
 				</div>
 				<div
 					className={`${
-						isOpen ? `max-h-[550px]` : 'max-h-0'
+						isOpen ? `max-h-[700px]` : 'max-h-0'
 					} relative w-full overflow-hidden transition-all duration-500 `}
 				>
 					<div

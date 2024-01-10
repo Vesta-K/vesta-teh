@@ -1,82 +1,25 @@
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
 
 interface ICard {
-	className?: string
-	icon?: JSX.Element
-	subTitle?: string
-	text?: string
-	title?: string
-	link?: boolean
+	icon: JSX.Element;
+
+	text: string;
 }
-function Card({ className, icon, text, title, subTitle, link }: ICard) {
+function Card({ icon, text }: ICard) {
 	return (
 		<div
-			className={`${className} ${
-				icon ? 'justify-between p-8' : 'justify-between p-8 pt-10'
-			} flex min-h-[284px] flex-col rounded-[40px] border border-color-border text-xl font-normal leading-loose tracking-tight`}
+			className={`hidden min-h-[182px] min-w-[210px] flex-col items-start justify-between rounded-[20px] border border-color-border px-3 pb-[32px] pt-5 sm:flex sm:w-5/12 sm:flex-nowrap md:max-w-[220px] 2xl:min-h-[268px] 2xl:max-w-[280px] 2xl:px-6 2xl:py-[32px] ultraXl:min-h-[284px] ultraXl:max-w-[330px]`}
 		>
-			<div
-				className={`flex ${
-					subTitle ? 'flex-col' : 'flex-row items-center justify-start '
-				} gap-3 `}
+			<span className={''}>{icon}</span>
+			<p
+				className={
+					'2xl:leading-1 text-base leading-tight tracking-tight text-color-text-chip-card 2xl:text-xl 2xl:tracking-tight ultraXl:text-2xl'
+				}
 			>
-				{icon}
-				<h5
-					className={`${subTitle && 'text-color-chip'} ${
-						text ? 'text-color-text-title' : 'text-color-text-chip-card'
-					} text-2xl leading-loose tracking-wide`}
-				>
-					{title}
-				</h5>
-				{subTitle && (
-					<h3
-						className={'text-lg leading-loose tracking-tight text-color-chip'}
-					>
-						{subTitle}
-					</h3>
-				)}
-			</div>
-
-			{text && (
-				<p
-					className={
-						'text-[24px] leading-[1.875rem] tracking-wide text-color-text-chip-card'
-					}
-				>
-					{text}
-				</p>
-			)}
-			{link && (
-				<div className={'flex flex-row justify-end last:self-end'}>
-					<Link href={'#'}>
-						<div
-							className={
-								'flex max-w-[225px] flex-row gap-3 rounded-[16px] bg-white px-6 py-4 text-lg leading-normal text-color-blue-accent transition-colors duration-200 hover:bg-color-sideBarButton-hover'
-							}
-						>
-							Открыть раздел
-							<svg
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M4.5 19.5L19.5 4.5M19.5 4.5H8.25M19.5 4.5V15.75"
-									stroke="#2388FF"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
-						</div>
-					</Link>
-				</div>
-			)}
+				{text}
+			</p>
 		</div>
-	)
+	);
 }
 
-export default Card
+export default Card;

@@ -1,11 +1,13 @@
-import type { Metadata } from 'next'
-import localFont from 'next/font/local'
-import './globals.css'
-import SideBar from '@/components/layout/header/sideBar'
-import React from 'react'
-import Header from '@/components/layout/header/header'
-import StoreProvider from '@/StoreProvider'
-import { ThemeProvider } from '@material-tailwind/react'
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import './globals.css';
+import SideBar from '@/components/layout/header/sideBar';
+import React from 'react';
+import Header from '@/components/layout/header/header';
+import StoreProvider from '@/StoreProvider';
+import Footer from '@/components/layout/footer/footer';
+import SideBarTablet from '@/components/layout/header/sideBarTablet';
+import Head from 'next/head';
 
 const cygro = localFont({
 	src: [
@@ -56,7 +58,7 @@ const cygro = localFont({
 		},
 	],
 	variable: '--font-cygro',
-})
+});
 const logoFonts = localFont({
 	src: [
 		{
@@ -66,36 +68,56 @@ const logoFonts = localFont({
 		},
 	],
 	variable: '--font-mursGothic',
-})
+});
 
 export const metadata: Metadata = {
-	title: 'Веста-тех',
-	description: '',
-}
+	title: 'Веста-тех.РФ',
+	description:
+		'Компания "Веста-Тех.РФ" предлагает взаимовыгодное сотрудничество в области технического присоединения (подключение к инженерным коммуникациям: электросетям, газопроводу, водоснабжению, канализации) и разработки проектно-сметной документации для нового строительства, реконструкции и модернизации существующих зданий и сооружений различного функционального назначения.',
+	keywords: [
+		'Веста-Тех',
+		'Сотрудничество',
+		'Техническое присоединение',
+		'Инженерные коммуникации',
+		'Электросети',
+		'Газопровод',
+		'Водоснабжение',
+		'Канализация',
+		'Проектно-сметная документация',
+		'Новое строительство',
+		'Реконструкция',
+		'Модернизация',
+		'Здания и сооружения',
+		'Функциональное назначение',
+	],
+};
 
 export default function RootLayout({
 	children,
 }: {
-	children: React.ReactNode
+	children: React.ReactNode;
 }) {
 	return (
 		<html lang="en" style={{ scrollBehavior: 'smooth' }}>
+			<Head>
+				<link rel="favicon" href="/favicon.ico" />
+			</Head>
 			<body className={`${cygro.variable} ${logoFonts.variable}`}>
 				<StoreProvider>
 					<Header />
-
 					<SideBar
-						leftposition={true}
 						classNameLink={
-							'leading-1 group flex w-full flex-row items-center gap-x-[10px] rounded-[24px] border border-color-border bg-white px-4 xl:px-6 py-4 text-xl text-color-sideBarButton-item transition-[background-color] duration-200 target:bg-black hover:bg-color-chip-hover active:text-color-blue-accent sm:text-2xl'
+							'group flex cursor-pointer flex-row rounded-[18px] border border-color-border bg-white p-4 hover:bg-color-chip-hover hover:text-color-text-title active:border-color-blue-accent transition-color duration-300'
 						}
 						className={
-							'fixed left-0 top-0 z-10 hidden h-screen w-fit flex-col items-center justify-center gap-20 bg-color-card-hover px-2 font-cygro font-normal sm:flex xl:px-4'
+							'fixed left-0 top-0 z-10 hidden h-screen w-[320px] flex-col items-center justify-center gap-20 bg-color-card-hover px-2 font-cygro font-normal xl:flex xl:px-4'
 						}
 					/>
-					<ThemeProvider>{children}</ThemeProvider>
+					{children}
+					<SideBarTablet />
+					<Footer />
 				</StoreProvider>
 			</body>
 		</html>
-	)
+	);
 }

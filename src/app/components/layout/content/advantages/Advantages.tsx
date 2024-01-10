@@ -1,16 +1,11 @@
-'use client'
-import React from 'react'
-import Card from '@/ui/card'
-import {
-	Accordion,
-	AccordionBody,
-	AccordionHeader,
-	ThemeProvider,
-} from '@material-tailwind/react'
+'use client';
+import React from 'react';
+import Card from '@/ui/card';
+import Title from '@/ui/title';
 
 const dataAdvantagesCard = [
 	{
-		text: 'Работаем с объектами любого назначения',
+		text: 'Работаем с объектами ЛЮБОГО назначения',
 		icon: (
 			<svg
 				width="46"
@@ -125,55 +120,71 @@ const dataAdvantagesCard = [
 			</svg>
 		),
 	},
-]
+];
 function Advantages() {
-	const [open, setOpen] = React.useState(1)
-
-	const handleOpen = (value: number) => setOpen(open === value ? 0 : value)
+	const [open, setOpen] = React.useState(3);
+	const handleOpen = (value: number) => setOpen(value);
 
 	return (
-		<ThemeProvider>
-			<div id={'usServices'} className={'px-1 font-cygro'}>
-				<div
-					className={
-						'flex flex-col gap-6 rounded-3xl bg-white px-12 pb-7 pt-10'
-					}
-				>
-					<h2
-						className={'text-2xl leading-10 text-color-text-title md:text-4xl'}
+		<section id={'advantages'} className={'px-1 font-cygro'}>
+			<div
+				className={
+					'flex flex-col gap-3 rounded-3xl bg-white px-2 pb-6 pt-5 sm:gap-6 sm:px-3 md:px-5 lg:px-7 lg:pb-7 lg:pt-6 2xl:px-8 2xl:pb-8 2xl:pt-7 ultraXl:px-[52px] ultraXl:pb-[44px] ultraXl:pt-10'
+				}
+			>
+				<Title title={'Преимущества'} />
+				<div className={'flex flex-row flex-wrap gap-2'}>
+					<h5
+						className={
+							'pl-1 text-lg leading-normal tracking-wide text-color-text-subtitle-inputItem sm:pl-0 md:max-w-[339px]'
+						}
 					>
-						Преимущества
-					</h2>
-					<div className={'flex flex-row flex-wrap gap-2'}>
-						<h5
-							className={
-								'max-w-[436px] text-lg leading-9 tracking-wide text-color-text-subtitle-inputItem md:text-2xl'
-							}
-						>
-							Мы профессионально выполняем оформление документов для получение
-							технических условий, договоров по техническому присоединению,
-							прокладке и замене труб, повышению давления.
-						</h5>
-						<div className={'w-[91px]'} />
+						Мы стремимся максимально точно понимать и выполнять работы в
+						соответствии с потребностями и техническим заданием наших заказчиков
+						в установленный срок.
+					</h5>
+					<div className={'hidden w-[91px] lg:block'} />
+
+					{dataAdvantagesCard.map(({ text, icon }, index) => (
+						<Card key={index} text={text} icon={icon} />
+					))}
+
+					<div className={'mt-10 w-full sm:hidden'}>
+						{/*Accordion*/}
 						{dataAdvantagesCard.map(({ text, icon }, index) => (
-							<Card
+							<div
 								key={index}
-								className={'hidden sm:flex md:max-w-[300px] lg:max-w-[330px]'}
-								text={text}
-								icon={icon}
-							/>
+								onClick={() =>
+									open === index ? handleOpen(-1) : handleOpen(index)
+								}
+							>
+								<div
+									className={
+										'-mt-7 space-y-5 overflow-hidden rounded-[20px] border border-color-border bg-white px-3 pb-5 pt-5'
+									}
+								>
+									{icon}
+									<div
+										className={`${
+											open === index ? 'max-h-[100px]' : 'max-h-0'
+										} relative w-full overflow-hidden transition-all duration-500`}
+									>
+										<p
+											className={`py-5 text-lg ${
+												open === index ? 'opacity-100 delay-200' : 'opacity-0'
+											} leading-[1.875rem] tracking-wide text-color-text-chip-card transition duration-300`}
+										>
+											{text}
+										</p>
+									</div>
+								</div>
+							</div>
 						))}
-						<div>
-							{/*Accordion*/}
-							{dataAdvantagesCard.map(({ text, icon }, index) => (
-								<div key={index}></div>
-							))}
-						</div>
 					</div>
 				</div>
 			</div>
-		</ThemeProvider>
-	)
+		</section>
+	);
 }
 
-export default Advantages
+export default Advantages;
