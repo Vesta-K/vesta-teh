@@ -1,26 +1,41 @@
 'use client';
 import ReactDom from 'react-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { modalReducer } from '../../../lib/reducers/modalReducer';
 import { useAppDispatch, useAppSelector } from '../../../lib/redux';
 import Loader from '@/ui/modal/stages/loader';
 import Status200 from '@/ui/modal/stages/status200';
+import ReCAPTCHA from 'react-google-recaptcha';
+import incorrect from './incorrect.svg';
+import Image from 'next/image';
+import { PatternFormat } from 'react-number-format';
+import Link from 'next/link';
 
 const styleInput =
-	'w-full px-3.5 w-full focus:invalid:border-color-error focus:invalid:bg-color-error-low focus:valid:border-color-valid py-2.5 md:text-xl align-bottom border-color-border text-base border rounded-[14px] placeholder:text-color-text-chip-card text-color-text-title focus:bg-color-border focus:outline-none focus:border-color-text-chip-card';
+	'h-fit px-3.5 w-full hover:bg-color-border invalid:[&:not(:placeholder-shown):not(:focus)]:border-color-error invalid:[&:not(:placeholder-shown):not(:focus)]:bg-color-error-low py-2.5 md:text-xl align-bottom border-color-border text-base border rounded-[14px] placeholder:text-color-text-chip-card text-color-text-title focus:bg-color-border focus:outline-none focus:border-color-blue-accent';
+
 function Modal() {
+	const getCaptchaRef = useRef<null | ReCAPTCHA>(null);
 	const { setOpenModal } = modalReducer.actions;
 	const { isVisible, subject } = useAppSelector((state) => state.modalReducer);
 	const dispatch = useAppDispatch();
 	const [isLoading, setIsLoading] = useState(false);
 	const [statusRes, setStatusRes] = useState(false);
+	const [statusCaptcha, setStatusCaptcha] = useState(true);
 	const [dataForm, setDataForm] = useState({
 		subject: subject,
 		number: '',
 		firstName: '',
 		secondName: '',
 	});
-
+	useEffect(() => {
+		const value = getCaptchaRef.current?.getValue();
+		if (value) {
+			setTimeout(() => {
+				setStatusCaptcha(true);
+			}, 60000);
+		}
+	}, [statusCaptcha]);
 	const handleOnChange = (
 		event:
 			| React.ChangeEvent<HTMLInputElement>
@@ -35,7 +50,7 @@ function Modal() {
 	const handleOnSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		setIsLoading(true);
-		fetch('https://веста-тех.рф:443/', {
+		fetch('/api/nodemailer', {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
@@ -56,6 +71,29 @@ function Modal() {
 		dispatch(setOpenModal({ isVisible: !isVisible }));
 	};
 
+	const reCaptchaValue = async () => {
+		const token = getCaptchaRef.current?.getValue();
+		const res = await fetch('/api/captcha', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(token),
+		});
+		const data = await res.json();
+		try {
+			if (data.ok) {
+				setStatusCaptcha(false);
+			} else {
+				return alert(data.message);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		return;
+	};
+
 	return ReactDom.createPortal(
 		<div
 			onClick={() => handleOnClose()}
@@ -74,7 +112,7 @@ function Modal() {
 						height="40"
 						viewBox="0 0 40 40"
 						className={
-							'group cursor-pointer rounded-[100%] text-color-border hover:bg-color-blue-accent hover:text-white'
+							'group cursor-pointer rounded-[100%] text-color-blue-accent hover:bg-color-blue-accent hover:text-white'
 						}
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
@@ -105,13 +143,14 @@ function Modal() {
 					</svg>
 				</div>
 				<form
+					noValidate={true}
 					id={'form'}
 					onSubmit={handleOnSubmit}
 					className={`relative ${
 						statusRes ? 'hidden' : 'flex'
-					} group max-w-[879px] flex-col gap-5`}
+					} group h-fit max-w-[879px] flex-col gap-5`}
 				>
-					<div className={`space-y-4 md:space-y-9`}>
+					<div className={`space-y-4 lg:space-y-6 ultraXl:space-y-9`}>
 						<div className={'space-y-3 md:space-y-6'}>
 							<h3
 								className={
@@ -122,7 +161,7 @@ function Modal() {
 							</h3>
 							<p
 								className={
-									'text-base leading-snug tracking-tight text-color-text-subtitle-inputItem md:text-2xl'
+									'text-base leading-relaxed tracking-tight text-color-text-subtitle-inputItem md:text-2xl'
 								}
 							>
 								Заполните даннные и мы вам презвоним в ближайшее время.
@@ -130,50 +169,82 @@ function Modal() {
 						</div>
 						<figure className={'h-px w-full bg-color-border'} />
 						<div className={'space-y-3'}>
-							<div
-								className={
-									'flex grid-cols-2 grid-rows-2 flex-wrap gap-3 sm:grid'
-								}
-							>
-								<input
-									required={true}
-									type={'text'}
-									id={'firstName'}
-									onChange={handleOnChange}
-									placeholder={'Имя'}
-									className={styleInput}
-									value={dataForm.firstName}
-								/>
-								<input
-									required={true}
-									type={'text'}
-									id={'secondName'}
-									onChange={handleOnChange}
-									placeholder={'Фамилия'}
-									className={styleInput}
-									value={dataForm.secondName}
-								/>
-								<input
-									required={true}
-									type={'text'}
-									id={'number'}
-									onChange={handleOnChange}
-									placeholder={'Номер телефона'}
-									className={styleInput}
-									pattern={
-										'^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$'
-									}
-									value={dataForm.number}
-								/>
+							<div className={'flex h-fit flex-wrap gap-3'}>
+								<div className={'flex w-full flex-col gap-3 sm:flex-row'}>
+									<div className={'h-fit w-full'}>
+										<label
+											htmlFor={'firstName'}
+											className={'text-lg font-normal text-color-text-title'}
+										>
+											ФИО
+										</label>
+										<input
+											pattern="^[а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+$"
+											maxLength={50}
+											required={true}
+											type={'text'}
+											id={'firstName'}
+											onChange={handleOnChange}
+											placeholder={'Иванов Иван Иванович'}
+											className={`${styleInput} peer mt-1`}
+											value={dataForm.firstName}
+										/>
+										<span
+											className={
+												'mt-1 hidden flex-row items-center gap-2 text-sm text-color-error peer-[&:not(:placeholder-shown):not(:focus):invalid]:flex'
+											}
+										>
+											<Image alt={''} src={incorrect} />
+											<>Пожулайста, заполните поле корректно!</>
+										</span>
+									</div>
+									<div className={'h-fit w-full'}>
+										<label
+											htmlFor={'number'}
+											className={
+												'pb-4 text-lg font-normal text-color-text-title'
+											}
+										>
+											Номер телефона
+										</label>
+										<PatternFormat
+											type="tel"
+											format="+7 (###) ###-##-##"
+											mask="_"
+											required={true}
+											id={'number'}
+											onChange={handleOnChange}
+											placeholder="+7 (999) 999-99-99"
+											className={`${styleInput} peer mt-1`}
+											value={dataForm.number}
+										/>
+										<span
+											className={
+												'mt-1 hidden flex-row items-center gap-2 text-sm text-color-error peer-[&:not(:placeholder-shown):not(:focus):invalid]:flex'
+											}
+										>
+											<Image alt={''} src={incorrect} />
+											<>Пожулайста, заполните поле корректно!</>
+										</span>
+									</div>
+								</div>
 							</div>
 							{!subject && (
-								<textarea
-									id={'subject'}
-									onChange={handleOnChange}
-									placeholder={'Опишите требуемую услугу'}
-									className={`${styleInput} `}
-									value={dataForm.subject}
-								/>
+								<div className={'space-y-1'}>
+									<label
+										htmlFor={'subject'}
+										className={'pb-4 text-lg font-normal text-color-text-title'}
+									>
+										Опишите требуемую услугу
+									</label>
+									<textarea
+										id={'subject'}
+										onChange={handleOnChange}
+										placeholder={'Геодезическая топографическая съемка'}
+										className={`${styleInput}  mt-1`}
+										value={dataForm.subject}
+									/>
+								</div>
 							)}
 						</div>
 
@@ -184,6 +255,7 @@ function Modal() {
 						>
 							Оставляя заявку вы соглашаетесь с{' '}
 							<a
+								href={'/privacy/privacy.docx'}
 								className={
 									'cursor-pointer px-1 text-xs text-color-blue-accent underline hover:text-color-blue-accent-hover md:px-2 md:text-2xl'
 								}
@@ -191,28 +263,43 @@ function Modal() {
 								Пользовательским соглашением
 							</a>
 						</h5>
-						<button
-							type={'submit'}
-							className={`${
-								statusRes ? 'opacity-0' : 'opacity-100'
-							} float-right flex w-full flex-row justify-center gap-1.5 rounded-[11px] bg-color-blue-accent px-6 py-2.5 text-lg leading-normal text-white transition-colors duration-300 hover:bg-color-blue-accent-hover group-invalid:pointer-events-none group-invalid:bg-color-activeRegion sm:py-3.5 md:rounded-[18px] lg:w-[228px] ultraXl:w-[296px] ultraXl:text-2xl`}
+						<div
+							className={
+								'flex flex-col items-start justify-between gap-4 py-2 md:flex-row md:items-end'
+							}
 						>
-							Отправить заявку{' '}
-							<svg
-								className={'h-5 w-5 md:h-6 md:w-6'}
-								viewBox="0 0 20 20"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
+							<ReCAPTCHA
+								ref={getCaptchaRef}
+								size={'normal'}
+								sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_TOKEN!}
+								onChange={() => reCaptchaValue()}
+							/>
+							<button
+								disabled={statusCaptcha}
+								type={'submit'}
+								className={`${
+									statusRes ? 'opacity-0' : 'opacity-100'
+								} float-right flex h-fit w-full flex-row justify-center gap-1.5 rounded-[11px] bg-color-blue-accent px-6 py-2.5 text-lg leading-normal text-white transition-colors duration-300 hover:bg-color-blue-accent-hover ${
+									statusCaptcha && 'pointer-events-none opacity-30'
+								} group-invalid:pointer-events-none group-invalid:opacity-30 sm:py-3.5 md:w-[228px] md:rounded-[18px] ultraXl:w-[296px] ultraXl:text-2xl`}
 							>
-								<path
-									d="M3.75 16.25L16.25 3.75M16.25 3.75H6.875M16.25 3.75V13.125"
-									stroke="white"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
-						</button>
+								Отправить заявку{' '}
+								<svg
+									className={'h-5 w-5 md:h-6 md:w-6'}
+									viewBox="0 0 20 20"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M3.75 16.25L16.25 3.75M16.25 3.75H6.875M16.25 3.75V13.125"
+										stroke="white"
+										strokeWidth="1.5"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+								</svg>
+							</button>
+						</div>
 					</div>
 				</form>
 				<Loader isLoading={isLoading} />

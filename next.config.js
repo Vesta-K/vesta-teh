@@ -2,7 +2,7 @@
 const nextConfig = {
 	poweredByHeader: false,
 	optimizeFonts: false,
-	distDir: 'dist',
+	webpack5: true,
 };
 
 module.exports = nextConfig;

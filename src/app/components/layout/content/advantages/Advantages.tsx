@@ -143,7 +143,7 @@ function Advantages() {
 						соответствии с потребностями и техническим заданием наших заказчиков
 						в установленный срок.
 					</h5>
-					<div className={'hidden w-[91px] lg:block'} />
+					<div className={'hidden w-[91px] lg:block ultraXl:w-[120px]'} />
 
 					{dataAdvantagesCard.map(({ text, icon }, index) => (
 						<Card key={index} text={text} icon={icon} />

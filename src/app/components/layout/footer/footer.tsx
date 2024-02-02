@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Link from 'next/link';
 
 function Footer() {
 	return (
@@ -15,6 +16,8 @@ function Footer() {
 				© ООО «Веста-Тех.РФ», 2019-2024
 			</h5>
 			<a
+				target="_blank"
+				href="/privacy/privacy.docx"
 				className={
 					'text-sm leading-snug tracking-tight text-white hover:cursor-pointer hover:text-color-chip-hover sm:text-lg'
 				}
@@ -22,7 +25,7 @@ function Footer() {
 				Политика конфиденциальности
 			</a>
 		</footer>
-	)
+	);
 }
 
-export default Footer
+export default Footer;

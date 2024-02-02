@@ -72,7 +72,7 @@ function SideBarButton({
 				} w-full space-y-1 overflow-hidden transition-all duration-500 ease-in-out`}
 			>
 				<Link
-					href={`/tehpris`}
+					href={`/designing`}
 					className={`${className} mt-1 max-w-[288px] text-xl text-color-text-chip-card active:text-color-blue-accent sm:text-2xl`}
 					onClick={() => {
 						{
@@ -85,7 +85,7 @@ function SideBarButton({
 					Проектирование зданий
 				</Link>
 				<Link
-					href={`/designing`}
+					href={`/tehpris`}
 					className={`${className} max-w-[288px] text-xl text-color-text-chip-card active:text-color-blue-accent sm:text-2xl`}
 					onClick={() => {
 						{

@@ -6,15 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "start-server": "node serverNodemailer.mjs",
-    "start-app": "yarn build && yarn start-server"
+    "lint": "next lint"
   },
   "dependencies": {
     "@material-tailwind/react": "^2.1.6",
     "@reduxjs/toolkit": "^2.0.1",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/nodemailer": "^6.4.14",
+    "@types/react-google-recaptcha": "^2.1.8",
     "connect-history-api-fallback": "^2.0.0",
     "next": "14.0.4",
     "nodemailer": "^6.9.8",
@@ -22,6 +21,8 @@
     "prettier-plugin-tailwindcss": "^0.5.9",
     "react": "^18",
     "react-dom": "^18",
+    "react-google-recaptcha": "^3.1.0",
+    "react-number-format": "^5.3.1",
     "react-redux": "^9.0.4",
     "react-spinners": "^0.13.8",
     "sharp": "^0.33.1"
