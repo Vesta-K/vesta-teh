@@ -1,18 +1,18 @@
-'use client'
-import React from 'react'
-import Logotype from '@/ui/Logotype'
-import MenuButton from '@/components/layout/header/ui/menuButton'
-import { button } from '@/components/layout/header/sideBar'
-import { useAppSelector } from '../../../../lib/redux'
-import SideBarButton from '@/ui/sideBarButton'
+'use client';
+import React from 'react';
+import Logotype from '@/ui/Logotype';
+import MenuButton from '@/components/layout/header/ui/menuButton';
+import { button } from '@/components/layout/header/sideBar';
+import { useAppSelector } from '../../../../lib/redux';
+import SideBarButton from '@/ui/sideBarButton';
 
 function Header() {
-	let { isOpen } = useAppSelector((state) => state.sideBarReducer)
+	let { isOpen } = useAppSelector((state) => state.sideBarReducer);
 
 	return (
 		<header
 			className={
-				'fixed z-50 flex max-h-screen w-screen justify-center  overflow-y-scroll p-2 sm:hidden'
+				'fixed z-50 flex max-h-screen w-screen justify-center overflow-y-scroll p-2 sm:hidden'
 			}
 		>
 			<div
@@ -50,7 +50,7 @@ function Header() {
 				</div>
 			</div>
 		</header>
-	)
+	);
 }
 
-export default Header
+export default Header;
